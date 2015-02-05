@@ -17,7 +17,7 @@ composer install
 4. Start the PHP Built-in web server
 
 ```
-php -S localhost:8800
+php -S localhost:8800 routing.php
 ```
 
 5. Visit the following links:
