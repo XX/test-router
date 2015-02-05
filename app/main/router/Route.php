@@ -31,8 +31,6 @@ class Route {
     
     public function match($uri) {
         if (!preg_match($this->regexp, $uri, $matches)) {
-            var_dump($this->regexp);
-            var_dump($uri);
             return false;
         }
         

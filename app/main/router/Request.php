@@ -42,17 +42,16 @@ class Request {
             }
         }
 //        var_dump($params);
+        $response = Response::create('request error');
+        
         if ($params) {
             $this->params = $params;
             $class = new \ReflectionClass('controller\\' . $params['controller'] . 'Controller');
-            $response = Response::create();
             $controller = $class->newInstance($this, $response);
-            $class->getMethod($params['action'] . 'Action')->invoke($controller);
-            
-            return $response;
-        } else {
-            return null;
+            $class->getMethod($params['action'] . 'Action')->invoke($controller);    
         }
+        
+        return $response;
     }
     
 }

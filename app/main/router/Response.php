@@ -4,8 +4,12 @@ class Response {
     
     private $content;
     
-    public static function create() {
-        return new Response();
+    public static function create($content = 'response') {
+        return new Response($content);
+    }
+    
+    public function __construct($content) {
+        $this->content = $content;
     }
     
     public function body($content = null) {
