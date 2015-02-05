@@ -1,5 +1,5 @@
 <?php namespace router;
 
-class Request {
+class Response {
     
 }
