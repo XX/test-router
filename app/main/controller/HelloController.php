@@ -9,9 +9,9 @@ class HelloController extends AbstractController {
     public function sayAction() {
         $target = 'What?';
         if (isset($this->request->params['id'])) {
-            $target = '<h2>' . $this->request->params['id'] . '</h2>';
+            $target = $this->request->params['id'];
         }
-        $this->response->body('<h2>executed Hello.index</h2><h2>' . $target . '</h2>');
+        $this->response->body('<h2>executed Hello.say</h2><h2>' . $target . '</h2>');
     }
 
 }
