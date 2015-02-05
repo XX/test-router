@@ -30,7 +30,7 @@ class Route {
     }
     
     public function match($uri) {
-        
+            
         if (!preg_match($this->regexp, $uri, $matches)) {
             return false;
         }
@@ -82,7 +82,7 @@ class Route {
 
     private function makeRegexp($uri) {
         $exp = preg_replace('#[^\d\w\s()<>]#', '\\\\$0', $uri);
-        $exp = str_replace(')', ')?', $exp);
+        $exp = str_replace([ '(', ')' ], [ '(?:', ')?' ], $exp);
         $exp = str_replace([ '<', '>' ], [ '(?<', '>[\w\d_]+)' ], $exp);
         return '#^' . $exp . '$#i';
     }
