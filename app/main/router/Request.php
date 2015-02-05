@@ -26,6 +26,7 @@ class Request {
     }
 
     private $uri;
+    public $params = [];
     
     public function __construct($uri) {
         $this->uri = trim($uri, '/');

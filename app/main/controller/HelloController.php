@@ -7,7 +7,11 @@ class HelloController extends AbstractController {
     }
     
     public function sayAction() {
-        $this->response->body('<h2>What?</h2>');
+        $target = 'What?';
+        if (isset($this->request->params['id'])) {
+            $target = '<h2>' . $this->request->params['id'] . '</h2>';
+        }
+        $this->response->body('<h2>executed Hello.index</h2><h2>' . $target . '</h2>');
     }
 
 }
