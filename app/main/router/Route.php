@@ -30,42 +30,45 @@ class Route {
     }
     
     public function match($uri) {
+        $params = [];
+        
         if (!preg_match($this->regexp, $uri, $matches)) {
-            return false;
-        }
+            $params['controller'] = static::DEFAULT_CONTROLLER;
+            $params['action'] = static::DEFAULT_ACTION;
+        } else {
         
-        $params = array();
-        
-        foreach ($matches as $key => $value) {
-            if (!is_int($key)) {
-                $params[$key] = $value;
-            }
-        }
-        
-        if (isset($this->defaults)) {
-            foreach ($this->defaults as $key => $value) {
-                if (empty($params[$key])) {
+            foreach ($matches as $key => $value) {
+                if (!is_int($key)) {
                     $params[$key] = $value;
                 }
             }
-        }
-        
-        if (!empty($params['controller'])) {
-            $params['controller'] = $this->makeCamelName($params['controller']);
-        } else {
-            $params['controller'] = static::DEFAULT_CONTROLLER;
-        }
-        
-        if (!empty($params['action'])) {
-            $params['action'] = lcfirst($this->makeCamelName($params['action']));
-        } else {
-            $params['action'] = static::DEFAULT_ACTION;
-        }
-        
-        foreach ($params as $key => $value) {
-            if ($key !== 'controller' && $key !== 'action') {
-                $_GET[$key] = $value;
+
+            if (isset($this->defaults)) {
+                foreach ($this->defaults as $key => $value) {
+                    if (empty($params[$key])) {
+                        $params[$key] = $value;
+                    }
+                }
             }
+
+            if (!empty($params['controller'])) {
+                $params['controller'] = $this->makeCamelName($params['controller']);
+            } else {
+                $params['controller'] = static::DEFAULT_CONTROLLER;
+            }
+
+            if (!empty($params['action'])) {
+                $params['action'] = lcfirst($this->makeCamelName($params['action']));
+            } else {
+                $params['action'] = static::DEFAULT_ACTION;
+            }
+
+            foreach ($params as $key => $value) {
+                if ($key !== 'controller' && $key !== 'action') {
+                    $_GET[$key] = $value;
+                }
+            }
+            
         }
         
         return $params;
@@ -82,7 +85,7 @@ class Route {
     private function makeRegexp($uri) {
         $exp = preg_replace('#[^\d\w\s()<>]#', '\\\\$0', $uri);
         $exp = str_replace(')', ')?', $exp);
-        $exp = str_replace(array('<', '>'), array('(?<', '>[\w\d_]+)'), $exp);
+        $exp = str_replace([ '<', '>' ], [ '(?<', '>[\w\d_]+)' ], $exp);
         return '#^' . $exp . '$#i';
     }
     

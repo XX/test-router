@@ -3,7 +3,11 @@
 class HelloController extends AbstractController {
     
     public function indexAction() {
-        $this->response->body('executed Hello.index');
+        $this->response->body('<h2>executed Hello.index</h2>');
+    }
+    
+    public function sayAction() {
+        $this->response->body('<h2>What?</h2>');
     }
 
 }

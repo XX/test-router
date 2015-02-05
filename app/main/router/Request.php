@@ -41,14 +41,22 @@ class Request {
                 break;
             }
         }
-//        var_dump($params);
+        
         $response = Response::create('request error');
         
         if ($params) {
             $this->params = $params;
-            $class = new \ReflectionClass('controller\\' . $params['controller'] . 'Controller');
-            $controller = $class->newInstance($this, $response);
-            $class->getMethod($params['action'] . 'Action')->invoke($controller);    
+            
+            $className = 'controller\\' . $params['controller'] . 'Controller';
+            if (class_exists($className)) {
+                $class = new \ReflectionClass($className);
+                $controller = $class->newInstance($this, $response);
+
+                $methodName = $params['action'] . 'Action';
+                if ($class->hasMethod($methodName)) {
+                    $class->getMethod($methodName)->invoke($controller);
+                }
+            }
         }
         
         return $response;
