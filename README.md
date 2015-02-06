@@ -17,7 +17,7 @@ To run please follow:
 4. Start the PHP Built-in web server
 
   ```
-  php -S localhost:8800 routing.php
+  php -S localhost:8800 index.php
   ```
 
 5. Visit the following links:
